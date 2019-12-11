@@ -9,7 +9,7 @@ describe(`Shopping Service Object`, function() {
       id:1,
       name:'Fish tricks',
       price:13.10,
-      date_added:2019-11-20, 17:54:56,
+      date_added:'2020-01-01T00:00:00.000Z',
       checked:false,
       category: 'Main',
     },
@@ -17,7 +17,7 @@ describe(`Shopping Service Object`, function() {
       id:2,
       name:'Not Dogs',
       price:4.99,
-      date_added:2019-11-20, 17:54:56,
+      date_added:'2020-01-01T00:00:00.000Z',
       checked:true,
       category:'Snack',
     },
@@ -25,7 +25,7 @@ describe(`Shopping Service Object`, function() {
       id:3,
       name:'Bluffalo Wings',
       price:5.50,
-      date_added:2019-11-20, 17:54:56,
+      date_added:'2020-01-01T00:00:00.000Z',
       checked:false,
       category:'Snack',
     },
@@ -38,11 +38,11 @@ describe(`Shopping Service Object`, function() {
     })
   })
 
-  before(() => db('shopping_item').truncate())
+  before(() => db('shopping_items').truncate())
 
   after(()=> db.destroy())
 
-  afterEach(()=> db('shopping_item').truncate())
+  afterEach(()=> db('shopping_items').truncate())
 
   context(`Given 'shopping_items' has no data`,
     ()=> {
@@ -56,11 +56,11 @@ describe(`Shopping Service Object`, function() {
     }
   )
   
-  it(`'insertItem() inserts a new item and resolves the new item with an 'id'`, () => {
+  it(`insertItem() inserts a new item and resolves the new item with an 'id'`, () => {
       const newItem = {
         name: 'Test new Name',
         price: 1.00,
-        date_added: '2020-01-01T00:00:00.000Z',
+        date_added: new Date('2020-01-01T00:00:00.000Z'),
         checked: false,
         category: 'Main'
       }
@@ -68,11 +68,11 @@ describe(`Shopping Service Object`, function() {
       .then(actual => {
           expect(actual).to.eql({
               id: 1,
-              name: newItem.title,
+              name: newItem.name,
               price: newItem.price,
               date_added: newItem.date_added,
               checked: newItem.checked,
-              category: newItem.category
+              category: newItem.category,
           })
       })
   })
